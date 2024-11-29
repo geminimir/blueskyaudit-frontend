@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { parseContent } from '@/data/blogPosts'
 import type { Components } from 'react-markdown'
-import { Navbar } from '@/components/NavBar'
+import { Navbar } from '@/components/Navbar'
 
 // Updated components with proper TypeScript types
 const components: Components = {

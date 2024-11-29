@@ -51,9 +51,6 @@ const TypewriterText = ({ text }: { text: string }) => {
   )
 }
 
-// Add this near the top of the file, outside the component
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
-
 // Add these types near the top with other type definitions
 type TestimonialType = {
   name: string;
@@ -86,36 +83,6 @@ export default function Home() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!formData.email || !emailRegex.test(formData.email)) {
         throw new Error('Please enter a valid email address')
-      }
-
-      // Create checkout session
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: formData.email.toLowerCase().trim(), // Normalize email
-          amount: 1000,
-          description: 'Recapify Waitlist Deposit - Fully refundable if not satisfied.',
-        }),
-      });
-
-      const session = await response.json();
-
-      if (session.error) {
-        throw new Error(session.error);
-      }
-
-      const stripe = await stripePromise;
-      if (!stripe) {
-        throw new Error('Stripe failed to load');
-      }
-
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: session.sessionId
-      });
-
-      if (error) {
-        throw new Error(error.message);
       }
 
     } catch (error) {

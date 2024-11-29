@@ -1,7 +1,7 @@
 import { blogPosts } from '@/data/blogPosts'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Navbar } from '@/components/NavBar'
+import { Navbar } from '@/components/Navbar'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
