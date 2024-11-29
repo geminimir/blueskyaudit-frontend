@@ -1,4 +1,13 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Recapify
+
+Recapify is an AI-powered meeting summarization tool that helps teams capture and share meeting insights efficiently.
+
+## Features
+
+- Automatic meeting transcription and summarization
+- Key points and action items extraction
+- Easy sharing and collaboration
+- Integration with popular meeting platforms
 
 ## Getting Started
 
