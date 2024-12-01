@@ -6,15 +6,14 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: Request) {
   try {
-    const { email, stripeSessionId, status = 'pending' } = await request.json()
+    const { email, status = 'pending' } = await request.json()
     
     // Insert/update waitlist entry
     await sql`
-      INSERT INTO waitlist (email, stripe_session_id, status, created_at)
-      VALUES (${email}, ${stripeSessionId}, ${status}, NOW())
+      INSERT INTO waitlist (email, status, created_at)
+      VALUES (${email}, ${status}, NOW())
       ON CONFLICT (email) 
       DO UPDATE SET 
-        stripe_session_id = ${stripeSessionId},
         status = ${status},
         updated_at = NOW()
     `

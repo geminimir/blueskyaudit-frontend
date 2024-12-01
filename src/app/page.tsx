@@ -3,12 +3,8 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
-import { ArrowRight, Check, ArrowDownToLine, Wand2, Brain, Clock, ChevronDown, Shield, Menu, X, Share, ArrowUpRight, Mic, Sparkles, CheckCircle, Users2, Handshake, Users, Code2, LineChart, Target } from 'lucide-react'
+import { ArrowRight, Check, ArrowDownToLine, Wand2, Brain, Clock, ChevronDown, Shield, Menu, X, Share, ArrowUpRight, Mic, Sparkles, CheckCircle, Users2, Handshake, Users, Code2, LineChart, Target, CheckSquare, MessageSquare, Link } from 'lucide-react'
 import Toast from '@/components/Toast'
-import { blogPosts } from '@/data/blogPosts'
-import Link from 'next/link'
-import { loadStripe } from '@stripe/stripe-js'
-import { Navbar } from '@/components/Navbar'
 
 // Types for form handling
 type WaitlistFormData = {
@@ -51,19 +47,6 @@ const TypewriterText = ({ text }: { text: string }) => {
   )
 }
 
-// Add these types near the top with other type definitions
-type TestimonialType = {
-  name: string;
-  role: string;
-  company: string;
-  image: string;
-  quote: string;
-  metrics?: {
-    label: string;
-    value: string;
-  };
-}
-
 export default function Home() {
   const [formData, setFormData] = useState<WaitlistFormData>({
     email: '',
@@ -74,7 +57,7 @@ export default function Home() {
     type: 'success' | 'error';
   } | null>(null)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleJoinWaitlist = async (e: React.FormEvent) => {
     e.preventDefault()
     setFormData(prev => ({ ...prev, status: 'loading' }))
 
@@ -85,8 +68,39 @@ export default function Home() {
         throw new Error('Please enter a valid email address')
       }
 
+      // Send to API
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: formData.email }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to join waitlist. Please try again.')
+      }
+
+      // Track signup event
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'waitlist_signup', {
+          email: formData.email,
+        })
+      }
+
+      // Success
+      setFormData(prev => ({
+        ...prev,
+        status: 'success',
+        email: ''
+      }))
+      setToast({
+        message: 'Successfully joined the waitlist! We\'ll be in touch soon.',
+        type: 'success'
+      })
+
     } catch (error) {
-      console.error('Checkout error:', error);
+      console.error('Waitlist error:', error)
       setFormData(prev => ({
         ...prev,
         status: 'error'
@@ -95,22 +109,22 @@ export default function Home() {
         message: error instanceof Error ? error.message : 'Something went wrong. Please try again.',
         type: 'error'
       })
+    } finally {
+      setFormData(prev => ({ ...prev, status: 'idle' }))
     }
   }
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
-
       {/* Hero Section */}
-      <section id="hero" className="pt-32 sm:pt-40 px-4 sm:px-6 py-16 sm:py-32 lg:px-8 bg-gradient-to-b from-white to-indigo-50">
+      <section id="hero" className="pt-24 sm:pt-40 px-4 sm:px-6 py-16 sm:py-32 lg:px-8 bg-gradient-to-b from-white to-indigo-50">
         <div className="mx-auto max-w-2xl text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
           >
-            Meeting Notes That Write Themselves
+            Meeting Notes to Action Items Instantly
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -118,12 +132,12 @@ export default function Home() {
             transition={{ delay: 0.2 }}
             className="mt-6 text-lg leading-8 text-gray-600"
           >
-            Get instant summaries and action items. 
-            Focus on the conversation, not note-taking.
+            Stop context switching between meetings, Slack, and Jira. 
+            Get AI-powered summaries and automated task creation where your team already works.
           </motion.p>
 
           {/* Waitlist Form */}
-          <form onSubmit={handleSubmit} className="mt-10 flex gap-x-4 justify-center">
+          <form onSubmit={handleJoinWaitlist} className="mt-10 flex gap-x-4 justify-center">
             <input
               type="email"
               required
@@ -157,275 +171,290 @@ export default function Home() {
       </section>
 
       {/* Product Preview Section - Add after Hero section */}
-      <section id="howitworks"className="py-24 overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center mb-24">
+      <section id="howitworks" className="py-12 sm:py-24 overflow-hidden">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Adjust header spacing */}
+          <div className="mx-auto max-w-2xl text-center mb-12 sm:mb-24">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
             >
               <h2 className="text-base font-semibold leading-7 text-[#6366F1]">How It Works</h2>
-              <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              <p className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 Turn Your Meetings Into Action in 3 Simple Steps
               </p>
-              <p className="mt-6 text-lg leading-8 text-gray-600">
+              <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-8 text-gray-600">
                 Focus on the conversation, let Recapify handle the rest
               </p>
             </motion.div>
           </div>
 
-          {/* Staggered Steps */}
+          {/* Adjust timeline container */}
           <div className="relative max-w-5xl mx-auto">
-            {/* Vertical Line */}
-            <div className="absolute left-8 top-0 bottom-0 w-px bg-indigo-100 md:left-1/2" />
+            {/* Vertical Line - Hide on mobile */}
+            <div className="absolute left-8 top-0 bottom-0 w-px bg-indigo-100 md:left-1/2 hidden md:block" />
 
-            {/* Step 1: Connect */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="relative ml-20 mb-24 md:ml-0 md:mr-[50%] md:pr-16"
-            >
-              <div className="absolute left-[-56px] flex h-12 w-12 items-center justify-center rounded-full border-2 border-indigo-100 bg-white md:left-auto md:right-[-32px]">
-                <span className="text-lg font-semibold text-[#6366F1]">1</span>
-              </div>
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">Connect Your Tools</h3>
-                <p className="text-base text-gray-500 mb-8">
-                  Sign up and link Recapify to your favorite tools. Configure your preferences in just a few clicks.
-                </p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  {['zoom', 'slack', 'asana', 'jira'].map((tool) => (
-                    <div key={tool} className="bg-gray-50 p-4 rounded-xl flex items-center justify-center hover:bg-gray-100 transition-colors">
-                      <Image
-                        src={`/logos/${tool}.svg`}
-                        alt={tool}
-                        width={80}
-                        height={24}
-                        className="h-6 object-contain opacity-75 hover:opacity-100 transition-opacity"
-                      />
-                    </div>
-                  ))}
+            {/* Steps Container */}
+            <div className="space-y-12 md:space-y-24">
+              {/* Step 1: Connect */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="relative ml-0 sm:ml-20 md:ml-0 md:mr-[50%] md:pr-16"
+              >
+                {/* Number indicator */}
+                <div className="absolute left-0 sm:left-[-56px] flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border-2 border-indigo-100 bg-white md:left-auto md:right-[-32px] z-10">
+                  <span className="text-base sm:text-lg font-semibold text-[#6366F1]">1</span>
                 </div>
-              </div>
-            </motion.div>
 
-            {/* Step 2: Run Meeting */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="relative ml-20 mb-24 md:ml-[50%] md:pl-16"
-            >
-              <div className="absolute left-[-56px] flex h-12 w-12 items-center justify-center rounded-full border-2 border-indigo-100 bg-white md:left-[-32px]">
-                <span className="text-lg font-semibold text-[#6366F1]">2</span>
-              </div>
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">Run Your Meeting</h3>
-                <p className="text-base text-gray-500 mb-8">
-                  Host your meeting as usual. Recapify listens in and transcribes automatically.
-                </p>
-                <div className="bg-gray-50 rounded-xl p-6">
-                  <div className="flex items-center gap-2 mb-6">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    <span className="text-sm text-gray-400">Recording in progress...</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
-                      <span className="text-xs font-medium text-indigo-600">SK</span>
-                    </div>
-                    <div className="flex-1 bg-white rounded-xl p-4 shadow-sm text-gray-400">
-                      <TypewriterText text="We need to finalize the launch timeline..." />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Step 3: Get Summary */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="relative ml-20 md:ml-0 md:mr-[50%] md:pr-16"
-            >
-              <div className="absolute left-[-56px] flex h-12 w-12 items-center justify-center rounded-full border-2 border-indigo-100 bg-white md:left-auto md:right-[-32px]">
-                <span className="text-lg font-semibold text-[#6366F1]">3</span>
-              </div>
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">Get Summary & Tasks</h3>
-                <p className="text-base text-gray-500 mb-8">
-                  Receive instant summaries in Slack and auto-generated tasks in your project tools.
-                </p>
-                <div className="space-y-6">
-                  {/* Slack Summary */}
-                  <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                    {/* Slack Header */}
-                    <div className="bg-[#1A1D21] text-white px-4 py-2 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
+                {/* Content card */}
+                <div className="ml-16 sm:ml-0 bg-white rounded-2xl p-4 sm:p-8 shadow-sm border border-gray-100">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2 sm:mb-3">Connect Your Tools</h3>
+                  <p className="text-sm sm:text-base text-gray-500 mb-4 sm:mb-8">
+                    Sign up and link Recapify to your favorite tools. Configure your preferences in just a few clicks.
+                  </p>
+                  
+                  {/* Tool grid - Made more responsive */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
+                    {['zoom', 'slack', 'asana', 'jira'].map((tool) => (
+                      <div key={tool} className="bg-gray-50 p-3 sm:p-4 rounded-xl flex items-center justify-center hover:bg-gray-100 transition-colors">
                         <Image
-                          src="/logos/slack.svg"
-                          alt="Slack"
-                          width={16}
-                          height={16}
+                          src={`/logos/${tool}.svg`}
+                          alt={tool}
+                          width={80}
+                          height={24}
+                          className="h-5 sm:h-6 object-contain opacity-75 hover:opacity-100 transition-opacity"
                         />
-                        <span className="text-sm font-medium">#team-updates</span>
                       </div>
-                      <div className="flex items-center gap-3 text-gray-400">
-                        <button className="hover:text-white">
-                          <Users2 className="w-4 h-4" />
-                        </button>
-                        <button className="hover:text-white">
-                          <Share className="w-4 h-4" />
-                        </button>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Step 2: Run Meeting */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="relative ml-0 sm:ml-20 md:ml-[50%] md:pl-16"
+              >
+                {/* Number indicator */}
+                <div className="absolute left-0 sm:left-[-56px] flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border-2 border-indigo-100 bg-white md:left-[-32px] z-10">
+                  <span className="text-base sm:text-lg font-semibold text-[#6366F1]">2</span>
+                </div>
+
+                {/* Content card */}
+                <div className="ml-16 sm:ml-0 bg-white rounded-2xl p-4 sm:p-8 shadow-sm border border-gray-100">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">Run Your Meeting</h3>
+                  <p className="text-base text-gray-500 mb-8">
+                    Host your meeting as usual. Recapify listens in and transcribes automatically.
+                  </p>
+                  <div className="bg-gray-50 rounded-xl p-6">
+                    <div className="flex items-center gap-2 mb-6">
+                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                      <span className="text-sm text-gray-400">Recording in progress...</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
+                        <span className="text-xs font-medium text-indigo-600">SK</span>
+                      </div>
+                      <div className="flex-1 bg-white rounded-xl p-4 shadow-sm text-gray-400">
+                        <TypewriterText text="We need to finalize the launch timeline..." />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Step 3: Get Summary */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="relative ml-0 sm:ml-20 md:ml-0 md:mr-[50%] md:pr-16"
+              >
+                {/* Number indicator */}
+                <div className="absolute left-0 sm:left-[-56px] flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border-2 border-indigo-100 bg-white md:left-auto md:right-[-32px] z-10">
+                  <span className="text-base sm:text-lg font-semibold text-[#6366F1]">3</span>
+                </div>
+
+                {/* Content card */}
+                <div className="ml-16 sm:ml-0 bg-white rounded-2xl p-4 sm:p-8 shadow-sm border border-gray-100">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">Get Summary & Tasks</h3>
+                  <p className="text-base text-gray-500 mb-8">
+                    Receive instant summaries in Slack and auto-generated tasks in your project tools.
+                  </p>
+                  <div className="space-y-6">
+                    {/* Slack Summary */}
+                    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                      {/* Slack Header */}
+                      <div className="bg-[#1A1D21] text-white px-4 py-2 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Image
+                            src="/logos/slack.svg"
+                            alt="Slack"
+                            width={16}
+                            height={16}
+                          />
+                          <span className="text-sm font-medium">#team-updates</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-gray-400">
+                          <button className="hover:text-white">
+                            <Users2 className="w-4 h-4" />
+                          </button>
+                          <button className="hover:text-white">
+                            <Share className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Message Content */}
+                      <div className="p-4 hover:bg-gray-50 transition-colors">
+                        {/* Bot Message */}
+                        <div className="flex items-start gap-3">
+                          <div className="w-9 h-9 rounded flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-indigo-500 to-purple-600">
+                            <Sparkles className="w-5 h-5 text-white" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="font-bold text-gray-900 hover:underline cursor-pointer">Recapify</span>
+                              <div className="flex items-center gap-1">
+                                <span className="text-[10px] font-medium text-white bg-emerald-500 px-1 rounded">APP</span>
+                              </div>
+                              <span className="text-gray-500 text-xs hover:underline cursor-pointer">11:30 AM</span>
+                            </div>
+                            <div className="mt-1 text-gray-900">
+                              <p className="font-medium mb-2">📝 Meeting Summary - Product Sync</p>
+                              <div className="mt-2 bg-gray-50 rounded border-l-4 border-indigo-500 p-3">
+                                <p className="font-medium mb-2">Key Decisions & Action Items:</p>
+                                <ul className="space-y-1.5 text-[15px]">
+                                  <li>• Launch date set for March 15th</li>
+                                  <li>• <button className="text-[#1264A3] hover:underline">@sarah</button> to finalize designs</li>
+                                  <li>• <button className="text-[#1264A3] hover:underline">@mike</button> to prep marketing</li>
+                                </ul>
+                              </div>
+                            </div>
+                            {/* Slack Reactions */}
+                            <div className="flex flex-wrap gap-1.5 mt-2">
+                              <button className="inline-flex items-center gap-1 hover:bg-gray-100 bg-gray-50 rounded px-2 py-0.5 text-xs border border-gray-200">
+                                👍 <span className="text-gray-600">3</span>
+                              </button>
+                              <button className="inline-flex items-center gap-1 hover:bg-gray-100 bg-gray-50 rounded px-2 py-0.5 text-xs border border-gray-200">
+                                ✅ <span className="text-gray-600">2</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     
-                    {/* Message Content */}
-                    <div className="p-4 hover:bg-gray-50 transition-colors">
-                      {/* Bot Message */}
-                      <div className="flex items-start gap-3">
-                        <div className="w-9 h-9 rounded flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-indigo-500 to-purple-600">
-                          <Sparkles className="w-5 h-5 text-white" />
+                    {/* Jira Tasks */}
+                    <div className="bg-[#F4F5F7] rounded-xl p-6">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-3">
+                          <Image
+                            src="/logos/jira.svg"
+                            alt="Jira"
+                            width={20}
+                            height={20}
+                            className="opacity-75"
+                          />
+                          <span className="text-sm font-medium text-[#42526E]">Created in Jira</span>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <span className="font-bold text-gray-900 hover:underline cursor-pointer">Recapify</span>
-                            <div className="flex items-center gap-1">
-                              <span className="text-[10px] font-medium text-white bg-emerald-500 px-1 rounded">APP</span>
-                            </div>
-                            <span className="text-gray-500 text-xs hover:underline cursor-pointer">11:30 AM</span>
-                          </div>
-                          <div className="mt-1 text-gray-900">
-                            <p className="font-medium mb-2">📝 Meeting Summary - Product Sync</p>
-                            <div className="mt-2 bg-gray-50 rounded border-l-4 border-indigo-500 p-3">
-                              <p className="font-medium mb-2">Key Decisions & Action Items:</p>
-                              <ul className="space-y-1.5 text-[15px]">
-                                <li>• Launch date set for March 15th</li>
-                                <li>• <button className="text-[#1264A3] hover:underline">@sarah</button> to finalize designs</li>
-                                <li>• <button className="text-[#1264A3] hover:underline">@mike</button> to prep marketing</li>
-                              </ul>
-                            </div>
-                          </div>
-                          {/* Slack Reactions */}
-                          <div className="flex flex-wrap gap-1.5 mt-2">
-                            <button className="inline-flex items-center gap-1 hover:bg-gray-100 bg-gray-50 rounded px-2 py-0.5 text-xs border border-gray-200">
-                              👍 <span className="text-gray-600">3</span>
-                            </button>
-                            <button className="inline-flex items-center gap-1 hover:bg-gray-100 bg-gray-50 rounded px-2 py-0.5 text-xs border border-gray-200">
-                              ✅ <span className="text-gray-600">2</span>
-                            </button>
-                          </div>
+                        <div className="flex items-center gap-2">
+                          <button className="text-[#42526E] hover:bg-[#DFE1E6] p-1 rounded transition-colors">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M12 5v14M5 12h14" />
+                            </svg>
+                          </button>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  
-                  {/* Jira Tasks */}
-                  <div className="bg-[#F4F5F7] rounded-xl p-6">
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="flex items-center gap-3">
-                        <Image
-                          src="/logos/jira.svg"
-                          alt="Jira"
-                          width={20}
-                          height={20}
-                          className="opacity-75"
-                        />
-                        <span className="text-sm font-medium text-[#42526E]">Created in Jira</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button className="text-[#42526E] hover:bg-[#DFE1E6] p-1 rounded transition-colors">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M12 5v14M5 12h14" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                    <div className="space-y-3">
-                      {[
-                        {
-                          key: 'RECAP-42',
-                          title: 'Finalize design specs for mobile app wireframes',
-                          priority: 'high',
-                          status: 'To Do',
-                          assignee: 'SK',
-                          assigneeColor: 'bg-indigo-500',
-                          dueDate: '2 days',
-                          type: 'task'
-                        },
-                        {
-                          key: 'RECAP-43',
-                          title: 'Coordinate Q2 marketing campaign launch',
-                          priority: 'medium',
-                          status: 'In Progress',
-                          assignee: 'JD',
-                          assigneeColor: 'bg-indigo-400',
-                          dueDate: '5 days',
-                          type: 'task'
-                        }
-                      ].map((task) => (
-                        <div 
-                          key={task.key} 
-                          className="group flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm hover:bg-[#F8F9FA] transition-all duration-200 border border-[#DFE1E6] cursor-pointer"
-                        >
-                          {/* Left Column - Priority */}
-                          <div className="mt-1">
-                            {task.priority === 'high' ? (
-                              <svg viewBox="0 0 16 16" width="14" height="14" fill="#CD1316">
-                                <path d="M8.0001 1.333C11.6821 1.333 14.6667 4.318 14.6667 8C14.6667 11.682 11.6821 14.6666 8.0001 14.6666C4.3181 14.6666 1.33344 11.682 1.33344 8C1.33344 4.318 4.3181 1.333 8.0001 1.333ZM8.0001 2.333C4.8701 2.333 2.33344 4.87 2.33344 8C2.33344 11.13 4.8701 13.6666 8.0001 13.6666C11.1301 13.6666 13.6667 11.13 13.6667 8C13.6667 4.87 11.1301 2.333 8.0001 2.333ZM7.33344 4.333H8.66677V9.333H7.33344V4.333Z" />
-                              </svg>
-                            ) : (
-                              <svg viewBox="0 0 16 16" width="14" height="14" fill="#0052CC">
-                                <path d="M8 1.33325C11.682 1.33325 14.6667 4.31825 14.6667 7.99992C14.6667 11.6816 11.682 14.6666 8 14.6666C4.318 14.6666 1.33334 11.6816 1.33334 7.99992C1.33334 4.31825 4.318 1.33325 8 1.33325Z" fillOpacity="0.4" />
-                              </svg>
-                            )}
-                          </div>
+                      <div className="space-y-3">
+                        {[
+                          {
+                            key: 'RECAP-42',
+                            title: 'Finalize design specs for mobile app wireframes',
+                            priority: 'high',
+                            status: 'To Do',
+                            assignee: 'SK',
+                            assigneeColor: 'bg-indigo-500',
+                            dueDate: '2 days',
+                            type: 'task'
+                          },
+                          {
+                            key: 'RECAP-43',
+                            title: 'Coordinate Q2 marketing campaign launch',
+                            priority: 'medium',
+                            status: 'In Progress',
+                            assignee: 'JD',
+                            assigneeColor: 'bg-indigo-400',
+                            dueDate: '5 days',
+                            type: 'task'
+                          }
+                        ].map((task) => (
+                          <div 
+                            key={task.key} 
+                            className="group flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm hover:bg-[#F8F9FA] transition-all duration-200 border border-[#DFE1E6] cursor-pointer"
+                          >
+                            {/* Left Column - Priority */}
+                            <div className="mt-1">
+                              {task.priority === 'high' ? (
+                                <svg viewBox="0 0 16 16" width="14" height="14" fill="#CD1316">
+                                  <path d="M8.0001 1.333C11.6821 1.333 14.6667 4.318 14.6667 8C14.6667 11.682 11.6821 14.6666 8.0001 14.6666C4.3181 14.6666 1.33344 11.682 1.33344 8C1.33344 4.318 4.3181 1.333 8.0001 1.333ZM8.0001 2.333C4.8701 2.333 2.33344 4.87 2.33344 8C2.33344 11.13 4.8701 13.6666 8.0001 13.6666C11.1301 13.6666 13.6667 11.13 13.6667 8C13.6667 4.87 11.1301 2.333 8.0001 2.333ZM7.33344 4.333H8.66677V9.333H7.33344V4.333Z" />
+                                </svg>
+                              ) : (
+                                <svg viewBox="0 0 16 16" width="14" height="14" fill="#0052CC">
+                                  <path d="M8 1.33325C11.682 1.33325 14.6667 4.31825 14.6667 7.99992C14.6667 11.6816 11.682 14.6666 8 14.6666C4.318 14.6666 1.33334 11.6816 1.33334 7.99992C1.33334 4.31825 4.318 1.33325 8 1.33325Z" fillOpacity="0.4" />
+                                </svg>
+                              )}
+                            </div>
 
-                          {/* Main Content */}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-2">
-                              <span className="text-xs font-medium text-[#42526E] hover:text-[#0052CC] hover:underline transition-colors">
-                                {task.key}
-                              </span>
-                              <span className={`px-2 py-0.5 text-xs font-medium rounded-full
-                                ${task.status === 'In Progress' 
-                                  ? 'bg-indigo-50 text-indigo-600' 
-                                  : 'bg-[#DFE1E6] text-[#42526E]'
-                                }`}>
-                                {task.status}
-                              </span>
-                            </div>
-                            <p className="text-sm text-[#172B4D] font-medium mb-3 hover:text-indigo-600 transition-colors line-clamp-2">
-                              {task.title}
-                            </p>
-                            <div className="flex items-center justify-between text-xs text-[#42526E]">
-                              <div className="flex items-center gap-3">
-                                <div className={`w-6 h-6 rounded-full ${task.assigneeColor} text-white flex items-center justify-center text-xs font-medium shadow-sm`}>
-                                  {task.assignee}
-                                </div>
-                                <span className="flex items-center gap-1.5 text-[#42526E]/70">
-                                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M12 6v6l4 2" />
-                                  </svg>
-                                  {task.dueDate}
+                            {/* Main Content */}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="text-xs font-medium text-[#42526E] hover:text-[#0052CC] hover:underline transition-colors">
+                                  {task.key}
+                                </span>
+                                <span className={`px-2 py-0.5 text-xs font-medium rounded-full
+                                  ${task.status === 'In Progress' 
+                                    ? 'bg-indigo-50 text-indigo-600' 
+                                    : 'bg-[#DFE1E6] text-[#42526E]'
+                                  }`}>
+                                  {task.status}
                                 </span>
                               </div>
-                              <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
-                                <button className="p-1 hover:bg-[#DFE1E6] rounded transition-colors">
-                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                                  </svg>
-                                </button>
+                              <p className="text-sm text-[#172B4D] font-medium mb-3 hover:text-indigo-600 transition-colors line-clamp-2">
+                                {task.title}
+                              </p>
+                              <div className="flex items-center justify-between text-xs text-[#42526E]">
+                                <div className="flex items-center gap-3">
+                                  <div className={`w-6 h-6 rounded-full ${task.assigneeColor} text-white flex items-center justify-center text-xs font-medium shadow-sm`}>
+                                    {task.assignee}
+                                  </div>
+                                  <span className="flex items-center gap-1.5 text-[#42526E]/70">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                      <circle cx="12" cy="12" r="10" />
+                                      <path d="M12 6v6l4 2" />
+                                    </svg>
+                                    {task.dueDate}
+                                  </span>
+                                </div>
+                                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
+                                  <button className="p-1 hover:bg-[#DFE1E6] rounded transition-colors">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                    </svg>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -914,7 +943,7 @@ export default function Home() {
               Join innovative teams who are already saving hours with AI-powered meeting summaries.
             </p>
 
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            <form onSubmit={handleJoinWaitlist} className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <input
                 type="email"
                 required
@@ -929,9 +958,9 @@ export default function Home() {
                 className="flex-none rounded-lg bg-[#6366F1] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50"
               >
                 {formData.status === 'loading' ? (
-                  'Processing...'
+                  <span className="flex justify-center">Processing...</span>
                 ) : (
-                  <span className="flex items-center gap-2">
+                  <span className="flex items-center justify-center gap-2">
                     Join Waitlist
                     <ArrowRight className="h-4 w-4" />
                   </span>
@@ -963,7 +992,7 @@ export default function Home() {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com/company/diagramify"
+                href="https://linkedin.com/company/recapify"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -989,42 +1018,6 @@ export default function Home() {
   )
 }
 
-const benefits = [
-  {
-    title: 'Save Time',
-    stat: '6+ hours saved per week',
-    icon: <Clock className="w-6 h-6 text-[#6366F1]" />
-  },
-  {
-    title: 'Never Miss Details',
-    stat: '100% meeting coverage',
-    icon: <Brain className="w-6 h-6 text-[#6366F1]" />
-  },
-  {
-    title: 'Boost Productivity',
-    stat: '3x faster follow-ups',
-    icon: <ArrowUpRight className="w-6 h-6 text-[#6366F1]" />
-  }
-]
-
-const steps = [
-  {
-    title: 'Connect Your Tools',
-    description: 'Integrate with your meeting and project management platforms in just a few clicks.',
-    icon: <ArrowRight className="h-5 w-5 text-[#ffffff]" />,
-  },
-  {
-    title: 'Record Your Meeting',
-    description: 'Conduct your meeting as usual - Recapify works silently in the background.',
-    icon: <Check className="h-5 w-5 text-[#ffffff]" />,
-  },
-  {
-    title: 'Get Instant Results',
-    description: 'Receive automated summaries and tasks in your preferred tools right after the meeting.',
-    icon: <ArrowDownToLine className="h-5 w-5 text-[#ffffff]" />,
-  },
-]
-
 const faqs = [
   {
     question: "How does Recapify work?",
@@ -1047,47 +1040,3 @@ const faqs = [
     answer: "We're launching soon! Join the waitlist to be among the first to try it and get special early access pricing.",
   },
 ]
-
-const testimonials = [
-  {
-    name: "Sarah Chen",
-    role: "Engineering Manager at TechCorp",
-    quote: "Recapify has transformed our engineering standups. We save 6+ hours every week on documentation.",
-    avatar: "/avatars/sarah.jpg"
-  },
-  // Add more testimonials...
-]
-
-const useCases = [
-  {
-    title: 'Team Standups',
-    description: 'Keep your daily standups focused and actionable',
-    icon: <Users2 className="w-6 h-6 text-[#6366F1]" />,
-    benefits: [
-      'Track progress automatically',
-      'Identify blockers quickly',
-      'Share updates instantly'
-    ]
-  },
-  {
-    title: 'Client Meetings',
-    description: 'Never miss important client requirements',
-    icon: <Handshake className="w-6 h-6 text-[#6366F1]" />,
-    benefits: [
-      'Capture all requirements',
-      'Share professional summaries',
-      'Track commitments'
-    ]
-  },
-  {
-    title: '1:1 Meetings',
-    description: 'Make every conversation count',
-    icon: <Users className="w-6 h-6 text-[#6366F1]" />,
-    benefits: [
-      'Track goals and progress',
-      'Document feedback',
-      'Follow up consistently'
-    ]
-  }
-]
-

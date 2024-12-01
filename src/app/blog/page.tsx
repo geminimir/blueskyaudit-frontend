@@ -1,7 +1,6 @@
 import { blogPosts } from '@/data/blogPosts'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Navbar } from '@/components/Navbar'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -12,7 +11,6 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
 
       <main className="pt-32 pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">

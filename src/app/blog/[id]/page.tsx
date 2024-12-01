@@ -7,7 +7,6 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { parseContent } from '@/data/blogPosts'
 import type { Components } from 'react-markdown'
-import { Navbar } from '@/components/Navbar'
 
 // Updated components with proper TypeScript types
 const components: Components = {
@@ -85,7 +84,6 @@ export default function BlogPost({ params }: Props) {
   return (
     <div className="min-h-screen bg-white">
       <div className="sticky top-0 z-50">
-        <Navbar />
         <div className="h-1 bg-gray-100">
           <div
             id="reading-progress"

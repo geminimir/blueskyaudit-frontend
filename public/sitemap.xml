@@ -1,30 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://diagramify.app/</loc>
+    <loc>https://recapify.io/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://diagramify.app/blog</loc>
+    <loc>https://recapify.io/blog</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://diagramify.app/blog/hidden-cost-diagram-tools</loc>
+    <loc>https://recapify.io/blog/meeting-productivity-crisis</loc>
     <lastmod>2024-11-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://diagramify.app/blog/essential-pm-diagrams</loc>
-    <lastmod>2024-11-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://diagramify.app/blog/ai-documentation-future</loc>
-    <lastmod>2024-11-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

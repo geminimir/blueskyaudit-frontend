@@ -38,7 +38,6 @@ function SuccessContent() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               email: session.customer_email,
-              stripeSessionId: session.id,
               status: 'confirmed'
             })
           })
