@@ -5,7 +5,7 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Blog | Recapify',
-  description: 'Latest insights and updates about AI-powered diagramming and product documentation',
+  description: 'Explore the latest insights and updates about AI-powered meeting assistants. Discover how to enhance productivity and streamline workflows with Recapify.',
 }
 
 export default function BlogPage() {

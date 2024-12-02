@@ -7,10 +7,10 @@ import { Navbar } from '@/components/Navbar'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Recapify - Meeting Notes That Write Themselves',
-  description: 'Transform your meetings with AI-powered summaries, action items, and integrations. Save 6+ hours every week on meeting documentation.',
+  title: 'Recapify - Never Lose Track of Meeting Actions Again',
+  description: 'Transform your meetings with AI-powered summaries and action items. Save 6+ hours every week.',
   openGraph: {
-    title: 'Recapify - Meeting Notes That Write Themselves',
+    title: 'Recapify - Never Lose Track of Meeting Actions Again',
     description: 'Transform your meetings with AI-powered summaries and action items. Save 6+ hours every week.',
     images: ['/og-image.png'],
     type: 'website',
@@ -19,7 +19,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Recapify - Meeting Notes That Write Themselves',
+    title: 'Recapify - Never Lose Track of Meeting Actions Again',
     description: 'Transform your meetings with AI-powered summaries and action items. Save 6+ hours every week.',
     images: ['/og-image.png'],
     creator: '@khalilmerc'
