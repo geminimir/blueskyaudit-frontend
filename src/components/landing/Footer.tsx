@@ -77,7 +77,7 @@ export default function Footer({ formData, onEmailChange, onSubmit }: FooterProp
               </svg>
             </a>
             <a
-              href="https://linkedin.com/company/recapify"
+              href="https://www.linkedin.com/company/recapifyio"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-gray-600 transition-colors"
