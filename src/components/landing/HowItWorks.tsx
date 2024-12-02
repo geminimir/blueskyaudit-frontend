@@ -372,13 +372,13 @@ export default function HowItWorks() {
                           type: 'task'
                         },
                         {
-                          key: 'RECAP-43',
-                          title: 'Coordinate Q2 marketing campaign launch',
-                          priority: 'medium',
-                          status: 'In Progress',
-                          assignee: 'JD',
-                          assigneeColor: 'bg-indigo-400',
-                          dueDate: '5 days',
+                          key: 'RECAP-44',
+                          title: 'Schedule user research interviews for new feature',
+                          priority: 'high', 
+                          status: 'To Do',
+                          assignee: 'AM',
+                          assigneeColor: 'bg-indigo-600',
+                          dueDate: '3 days',
                           type: 'task'
                         }
                       ].map((task) => (
