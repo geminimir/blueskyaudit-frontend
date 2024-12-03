@@ -20,27 +20,27 @@ export async function POST(request: Request) {
 
     try {
       await resend.emails.send({
-        from: 'recapify@resend.dev', // Using Resend's testing domain
+        from: 'hello@bluebrandly.com',
         to: email,
-        subject: 'Welcome to Recapify Waitlist! 🎉',
+        subject: 'Welcome to BlueBrandly Waitlist! 🎉',
         html: `
-          <p>Thank you for joining our exclusive waitlist. You're now first in line to experience the future of diagram creation.</p>
+          <p>Thank you for joining our exclusive waitlist. You're now first in line to experience premium brand development and marketing solutions.</p>
           
           <h2>What's coming your way:</h2>
           <ul>
-            <li>🎁 <strong>50% lifetime discount</strong> when we launch</li>
-            <li>⚡️ Early access to our platform</li>
-            <li>💎 Direct Input on Features</li>
-            <li>🎯 Priority support when we launch</li>
-            <li>🔔 First to know about new features</li>
+            <li>🎁 <strong>Early bird pricing</strong> when we launch</li>
+            <li>⚡️ Priority access to our services</li>
+            <li>💎 Personalized brand consultation</li>
+            <li>🎯 Dedicated account manager</li>
+            <li>🔔 First to know about new service offerings</li>
           </ul>
 
-          <p>We're working hard to create something amazing and can't wait to share it with you. 
-          As a waitlist member, you'll get an exclusive <strong>50% lifetime discount</strong> on any plan when we launch!</p>
+          <p>We're working hard to create exceptional branding and marketing solutions tailored for your business.
+          As a waitlist member, you'll get exclusive early bird pricing when we launch!</p>
           
           <p>Stay tuned for updates!</p>
           
-          <p style="color: #666; font-size: 0.9em;">Best regards,<br>Khalil<br>Founder, Recapify</p>
+          <p style="color: #666; font-size: 0.9em;">Best regards,<br>The BlueBrandly Team</p>
         `
       })
     } catch (emailError) {

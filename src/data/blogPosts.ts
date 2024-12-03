@@ -22,6 +22,21 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 'bluebrandly-launch',
+    title: "BlueBrandly is Launching Soon!",
+    description: "We're launching soon! Join our Pioneer Program to be among the first brands to access the platform and secure special early-access pricing.",
+    thumbnail: "/blog/bluebrandly-launch.png",
+    readTime: "1 min read",
+    date: "December 3, 2024",
+    category: "Announcement",
+    cta: {
+      text: "Join the Waitlist",
+      link: "#join-waitlist"
+    },
+    content: "# BlueBrandly is Launching Soon!\n\nWe're launching soon! Join our Pioneer Program to be among the first brands to access the platform and secure special early-access pricing.",
+    images: {}
+  },
+  /*{
     id: 'post-meeting-workflows-broken',
     title: "Why Post-Meeting Workflows Are Broken and How to Fix Them",
     description: "Explore the inefficiencies in post-meeting workflows and discover how AI meeting assistants can streamline processes, saving time and boosting productivity.",
@@ -163,7 +178,7 @@ export const blogPosts: BlogPost[] = [
       
       "## Ready to Revolutionize Your Meetings?\n\n" +
       "Start your free trial today and experience the future of meeting productivity. Your team will thank you.\n\n"
-  },
+  },*/
 
 ];
 

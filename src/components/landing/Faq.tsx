@@ -5,25 +5,29 @@ import { ChevronDown } from 'lucide-react'
 
 const faqs = [
   {
-    question: "How does Recapify work?",
-    answer: "Recapify uses AI to analyze your meeting recordings or transcripts, automatically extracting key points, decisions, and action items. It then creates summaries and tasks that are distributed to your team's preferred tools.",
+    question: "What is BlueBrandly?",
+    answer: "BlueBrandly is the first influencer marketing platform built specifically for Bluesky. We help brands discover authentic creators, manage campaigns, and measure results in the decentralized social space.",
   },
   {
-    question: "What platforms do you integrate with?",
-    answer: "We currently support Zoom, Google Meet, Slack, Asana, and Jira. More integrations are being added based on user feedback.",
+    question: "How does creator discovery work?",
+    answer: "Our AI-powered platform analyzes Bluesky creators based on their content quality, engagement rates, and audience authenticity. You can filter by niche, location, and other metrics to find the perfect match for your brand.",
   },
   {
-    question: "How accurate are the meeting summaries?",
-    answer: "Our AI has been trained on thousands of meetings and consistently captures 95%+ of key points and action items. You can always review and edit summaries before they're distributed.",
+    question: "What features are included in the Pioneer Program?",
+    answer: "Pioneer members get access to all platform features including AI-powered creator discovery, campaign management tools, and analytics dashboard. You'll also receive priority support and 50% off regular pricing for life.",
   },
   {
-    question: "How can I join the waitlist?",
-    answer: "Simply enter your email address to join. You'll be among the first to try it and get special early access pricing.",
+    question: "How do you verify creator authenticity?",
+    answer: "We analyze multiple data points including engagement patterns, audience growth, and content consistency to verify authentic creators. Our platform also integrates with Bluesky's AT Protocol to verify account ownership.",
   },
   {
-    question: "When will it be available?",
-    answer: "We're launching soon! Join the waitlist to be among the first to try it and get special early access pricing.",
+    question: "When will BlueBrandly launch?",
+    answer: "We're launching soon! Join our Pioneer Program to be among the first brands to access the platform and secure special early-access pricing.",
   },
+  {
+    question: "What makes BlueBrandly different from other platforms?",
+    answer: "BlueBrandly is built specifically for Bluesky, leveraging the platform's unique features and decentralized nature. We focus on authentic engagement and provide tools tailored to Bluesky's creator ecosystem.",
+  }
 ]
 
 export default function Faq() {
@@ -31,9 +35,12 @@ export default function Faq() {
     <section id="faq" className="py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center mb-16">
-          <h2 className="text-base font-semibold leading-7 text-[#6366F1]">FAQ</h2>
+          <h2 className="text-base font-semibold leading-7 text-[#0185FF]">FAQ</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Frequently asked questions
+            Frequently Asked Questions
+          </p>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            Everything you need to know about BlueBrandly and our Pioneer Program
           </p>
         </div>
 
@@ -43,16 +50,17 @@ export default function Faq() {
               key={index}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
+              transition={{ delay: index * 0.1 }}
               className="py-6"
             >
               <details className="group">
                 <summary className="flex justify-between items-center cursor-pointer list-none">
                   <h3 className="text-lg font-semibold text-gray-900">{faq.question}</h3>
                   <span className="ml-6 flex-shrink-0">
-                    <ChevronDown className="h-5 w-5 text-gray-500 group-open:rotate-180 transition-transform" />
+                    <ChevronDown className="h-5 w-5 text-[#0185FF] group-open:rotate-180 transition-transform" />
                   </span>
                 </summary>
-                <p className="mt-4 text-gray-600">{faq.answer}</p>
+                <p className="mt-4 text-gray-600 leading-relaxed">{faq.answer}</p>
               </details>
             </motion.div>
           ))}

@@ -4,8 +4,8 @@ import Image from 'next/image'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Blog | Recapify',
-  description: 'Explore the latest insights and updates about AI-powered meeting assistants. Discover how to enhance productivity and streamline workflows with Recapify.',
+  title: 'Blog | BlueBrandly',
+  description: 'Explore the latest insights about Bluesky influencer marketing. Learn how to grow your brand and engage with authentic creators on the decentralized social network.',
 }
 
 export default function BlogPage() {

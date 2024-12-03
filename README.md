@@ -1,6 +1,6 @@
-# Recapify
+# BlueBrandly
 
-Recapify is an AI-powered meeting summarization tool that helps teams capture and share meeting insights efficiently.
+BlueBrandly is a Bluesky influencer marketing platform that helps brands discover and collaborate with authentic creators on the decentralized social network.
 
 ## Features
 

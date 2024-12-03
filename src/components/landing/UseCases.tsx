@@ -1,180 +1,145 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { Code2, Target, Users2, Check } from 'lucide-react'
+import { Code, Rocket, Users, Zap } from 'lucide-react'
 
 const useCases = [
   {
-    title: 'Engineering Standups',
-    description: 'Transform daily standups into actionable insights and automated workflows',
-    icon: <Code2 className="w-6 h-6 text-indigo-600" />,
-    features: [
-      'Real-time AI-powered meeting transcription',
-      'Automatic task creation and assignment in Jira',
-      'Instant standup summaries in Slack with @mentions',
-      'Smart blocker and dependency detection'
+    title: 'Early-Stage Startups',
+    description: 'Build your presence on Bluesky from day one',
+    icon: <Rocket className="w-6 h-6 text-[#0185FF]" />,
+    capabilities: [
+      'Connect with tech early adopters',
+      'Build authentic community relationships',
+      'Get real product feedback',
     ],
-    example: {
-      input: "We're facing some API performance issues that might impact the release...",
-      output: {
-        summary: "API Performance Optimization Plan",
-        tasks: [
-          "Implement rate limiting and caching layer",
-          "Set up performance monitoring alerts",
-          "Schedule load testing session",
-          "Update API documentation"
-        ],
-        integrations: ['jira', 'slack', 'teams']
-      }
-    }
+    features: [
+      'AI-powered creator discovery',
+      'Engagement analytics',
+      'Campaign management tools'
+    ]
   },
   {
-    title: 'Project Planning',
-    description: 'Never lose track of decisions or action items with AI-powered meeting intelligence',
-    icon: <Target className="w-6 h-6 text-indigo-600" />,
-    features: [
-      'Smart decision and commitment tracking',
-      'Automated task creation with due dates',
-      'Real-time meeting summaries with key points',
-      'Seamless integration with project tools'
+    title: 'Developer Tools',
+    description: 'Reach developers where discussions happen',
+    icon: <Code className="w-6 h-6 text-[#0185FF]" />,
+    capabilities: [
+      'Join technical discussions',
+      'Share product updates',
+      'Build developer relations',
     ],
-    example: {
-      input: "Let's plan out the Q2 mobile app launch timeline and requirements...",
-      output: {
-        summary: "Q2 Mobile App Launch Strategy",
-        tasks: [
-          "Design system implementation by March 15",
-          "Beta testing program setup",
-          "Marketing assets preparation",
-          "Launch day coordination plan"
-        ],
-        integrations: ['asana', 'slack', 'zoom']
-      }
-    }
+    features: [
+      'Topic-based creator matching',
+      'Content performance tracking',
+      'Automated outreach tools'
+    ]
   },
   {
-    title: 'Client Meetings',
-    description: 'Focus on building relationships while AI captures every detail and next step',
-    icon: <Users2 className="w-6 h-6 text-indigo-600" />,
-    features: [
-      'Professional meeting transcripts and summaries',
-      'Automated follow-up task creation',
-      'Smart requirement and feedback tracking',
-      'Instant sharing with internal teams'
+    title: 'Web3 Projects',
+    description: 'Connect with the decentralized community',
+    icon: <Zap className="w-6 h-6 text-[#0185FF]" />,
+    capabilities: [
+      'Build credibility in Web3',
+      'Engage with crypto natives',
+      'Drive protocol adoption',
     ],
-    example: {
-      input: "We need the new dashboard features ready for the Q2 launch, with a focus on analytics...",
-      output: {
-        summary: "Client Dashboard Requirements",
-        tasks: [
-          "Create detailed analytics wireframes",
-          "Develop dashboard prototype",
-          "Schedule UX review session",
-          "Prepare technical specification"
-        ],
-        integrations: ['jira', 'slack', 'zoom']
-      }
-    }
+    features: [
+      'Web3-focused creator discovery',
+      'Community growth tracking',
+      'Multi-campaign coordination'
+    ]
+  },
+  {
+    title: 'Creator Platforms',
+    description: 'Grow your platform through creator partnerships',
+    icon: <Users className="w-6 h-6 text-[#0185FF]" />,
+    capabilities: [
+      'Partner with content creators',
+      'Drive platform adoption',
+      'Build creator community',
+    ],
+    features: [
+      'Creator relationship management',
+      'Content collaboration tools',
+      'Performance analytics'
+    ]
   }
 ]
 
 export default function UseCases() {
   return (
-    <section id="usecases" className="py-24 bg-gradient-to-b from-white to-indigo-50/30">
+    <section id="usecases" className="py-24 bg-gradient-to-b from-white to-[#F7FBFF]">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center mb-24">
+        <div className="mx-auto max-w-2xl text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-base font-semibold leading-7 text-indigo-600">Use Cases</h2>
+            <h2 className="text-base font-semibold leading-7 text-[#0185FF]">Use Cases</h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Meetings Made Effortless
+              Built for Growth-Focused Teams
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              From daily standups to client meetings, transform conversations into action
+              Discover how BlueBrandly can help you build your presence on Bluesky
             </p>
           </motion.div>
         </div>
 
-        <div className="mx-auto max-w-5xl space-y-12">
+        <div className="mx-auto max-w-5xl grid md:grid-cols-2 gap-8">
           {useCases.map((useCase, index) => (
             <motion.div
               key={useCase.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="group bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:border-indigo-100 transition-all duration-200"
+              className="group relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300"
             >
-              <div className="grid md:grid-cols-2 gap-12 items-start">
-                {/* Left Column - Info */}
-                <div>
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-100 transition-colors">
-                      {useCase.icon}
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900">{useCase.title}</h3>
-                  </div>
-                  
-                  <p className="text-gray-600 mb-8">{useCase.description}</p>
+              {/* Subtle gradient overlay on hover */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#0185FF]/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                  <div className="space-y-3">
-                    {useCase.features.map((feature) => (
-                      <div key={feature} className="flex items-start gap-3">
-                        <div className="p-1 bg-green-50 rounded-full mt-0.5">
-                          <Check className="w-3 h-3 text-green-500" />
-                        </div>
-                        <span className="text-sm text-gray-600">{feature}</span>
-                      </div>
+              {/* Header */}
+              <div className="relative flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-xl bg-[#F0F8FF] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  {useCase.icon}
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900">{useCase.title}</h3>
+                  <p className="text-sm text-gray-600">{useCase.description}</p>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="relative space-y-8">
+                {/* Capabilities */}
+                <div>
+                  <h4 className="text-sm font-medium text-gray-900 mb-4 flex items-center gap-2">
+                    What You Can Do
+                    <div className="h-px flex-1 bg-gray-100" />
+                  </h4>
+                  <ul className="space-y-3">
+                    {useCase.capabilities.map((item, i) => (
+                      <li key={i} className="text-sm text-gray-600 flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#0185FF]" />
+                        {item}
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
 
-                {/* Right Column - Example */}
-                <div className="bg-gray-50 rounded-xl p-6">
-                  <div className="mb-6">
-                    <div className="text-sm font-medium text-gray-400 mb-2">Example Discussion</div>
-                    <div className="bg-white rounded-lg p-4 text-sm text-gray-600 border border-gray-100">
-                      "{useCase.example.input}"
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="text-sm font-medium text-gray-400 mb-2">Recapify Output</div>
-                    <div className="space-y-4">
-                      <div className="bg-white rounded-lg p-4 border border-gray-100">
-                        <div className="text-sm font-medium text-gray-900 mb-4">
-                          {useCase.example.output.summary}
-                        </div>
-                        <div className="space-y-3">
-                          {useCase.example.output.tasks.map((task, i) => (
-                            <div key={i} className="flex items-start gap-2 text-sm">
-                              <div className="p-1 bg-green-50 rounded-full mt-0.5">
-                                <Check className="w-3 h-3 text-green-500" />
-                              </div>
-                              <span className="text-gray-600">{task}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
-                        <span className="text-xs text-gray-400">Syncs with</span>
-                        {useCase.example.output.integrations.map((tool) => (
-                          <div key={tool}>
-                            <Image
-                              src={`/logos/${tool}.svg`}
-                              alt={tool}
-                              width={20}
-                              height={20}
-                              className="opacity-75 hover:opacity-100 transition-opacity"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                {/* Features */}
+                <div className="pt-6 border-t border-gray-100">
+                  <h4 className="text-sm font-medium text-gray-900 mb-4 flex items-center gap-2">
+                    Key Features
+                    <div className="h-px flex-1 bg-gray-100" />
+                  </h4>
+                  <ul className="space-y-3">
+                    {useCase.features.map((feature, i) => (
+                      <li key={i} className="text-sm text-gray-600 flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#0185FF]" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </motion.div>

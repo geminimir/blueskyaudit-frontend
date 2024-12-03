@@ -15,7 +15,7 @@ export const Navbar = () => {
                     {/* Logo */}
                     <div className="flex items-center">
                         <Link href="/" className="text-xl font-bold text-gray-900">
-                            Recapify
+                            BlueBrandly
                         </Link>
                     </div>
 
@@ -39,7 +39,7 @@ export const Navbar = () => {
                         <Link
                             href="/">
                             <span
-                                className="flex items-center rounded-lg bg-[#6366F1] px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 text-center"
+                                className="flex items-center rounded-lg bg-[#0185FF] px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 text-center"
                             >
                                 Join Waitlist
                             </span>

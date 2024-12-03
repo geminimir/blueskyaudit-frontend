@@ -7,48 +7,48 @@ import { Navbar } from '@/components/Navbar'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Recapify - Never Lose Track of Meeting Actions Again',
-  description: 'Transform your meetings with AI-powered summaries and action items. Save 6+ hours every week.',
-  metadataBase: new URL('https://recapify.io'),
+  title: 'BlueBrandly - Premium Brand Development & Marketing',
+  description: 'Expert brand development and marketing solutions for businesses looking to stand out. Transform your brand identity and market presence.',
+  metadataBase: new URL('https://bluebrandly.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'Recapify - Never Lose Track of Meeting Actions Again',
-    description: 'Transform your meetings with AI-powered summaries and action items. Save 6+ hours every week.',
-    url: 'https://recapify.io',
+    title: 'BlueBrandly - Premium Brand Development & Marketing',
+    description: 'Expert brand development and marketing solutions for businesses looking to stand out. Transform your brand identity and market presence.',
+    url: 'https://bluebrandly.com',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Recapify - AI Meeting Assistant',
+        alt: 'BlueBrandly - Brand Development & Marketing',
       }
     ],
     type: 'website',
     locale: 'en_US',
-    siteName: 'Recapify',
+    siteName: 'BlueBrandly',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Recapify - Never Lose Track of Meeting Actions Again',
-    description: 'Transform your meetings with AI-powered summaries and action items. Save 6+ hours every week.',
+    title: 'BlueBrandly - Premium Brand Development & Marketing',
+    description: 'Expert brand development and marketing solutions for businesses looking to stand out. Transform your brand identity and market presence.',
     images: ['/og-image.png'],
-    creator: '@khalilmerc',
-    site: '@recapify',
-    domain: 'recapify.io',
+    creator: '@bluebrandly',
+    site: '@bluebrandly',
+    domain: 'bluebrandly.com',
   },
   keywords: [
-    'meeting notes',
-    'ai meeting assistant',
-    'meeting transcription',
-    'meeting summary',
-    'action items',
-    'meeting productivity',
-    'team collaboration',
-    'meeting automation'
+    'brand development',
+    'marketing solutions',
+    'brand identity',
+    'digital marketing',
+    'brand strategy',
+    'business branding',
+    'marketing services',
+    'brand consulting'
   ],
-  authors: [{ name: 'Recapify', url: 'https://recapify.io' }],
+  authors: [{ name: 'BlueBrandly', url: 'https://bluebrandly.com' }],
   viewport: {
     width: 'device-width',
     initialScale: 1,
@@ -79,21 +79,21 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Recapify - Never Lose Track of Meeting Actions Again" />
-        <meta prefix="og: http://ogp.me/ns#" property="og:description" content="Transform your meetings with AI-powered summaries and action items. Save 6+ hours every week." />
-        <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://recapify.io/og-image.png" />
+        <meta prefix="og: http://ogp.me/ns#" property="og:title" content="BlueBrandly - Premium Brand Development & Marketing" />
+        <meta prefix="og: http://ogp.me/ns#" property="og:description" content="Expert brand development and marketing solutions for businesses looking to stand out. Transform your brand identity and market presence." />
+        <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://bluebrandly.com/og-image.png" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@recapify" />
-        <meta name="twitter:title" content="Recapify - Never Lose Track of Meeting Actions Again" />
-        <meta name="twitter:description" content="Transform your meetings with AI-powered summaries and action items. Save 6+ hours every week." />
-        <meta name="twitter:image" content="https://recapify.io/og-image.png" />
-        <meta name="twitter:creator" content="@khalilmerc" />
-        <meta name="twitter:domain" content="recapify.io" />
+        <meta name="twitter:site" content="@bluebrandly" />
+        <meta name="twitter:title" content="BlueBrandly - Premium Brand Development & Marketing" />
+        <meta name="twitter:description" content="Expert brand development and marketing solutions for businesses looking to stand out. Transform your brand identity and market presence." />
+        <meta name="twitter:image" content="https://bluebrandly.com/og-image.png" />
+        <meta name="twitter:creator" content="@bluebrandly" />
+        <meta name="twitter:domain" content="bluebrandly.com" />
         
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        <meta name="apple-mobile-web-app-title" content="Recapify" />
+        <meta name="apple-mobile-web-app-title" content="BlueBrandly" />
         
         <meta name="theme-color" content="#ffffff" />
         
