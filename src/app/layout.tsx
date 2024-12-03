@@ -79,12 +79,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <meta property="linkedin:card" content="summary_large_image" />
-        <meta property="linkedin:title" content="Recapify - Never Lose Track of Meeting Actions Again" />
-        <meta property="linkedin:description" content="Transform your meetings with AI-powered summaries and action items. Save 6+ hours every week." />
-        <meta property="linkedin:image" content="https://recapify.io/og-image.png" />
+        <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Recapify - Never Lose Track of Meeting Actions Again" />
+        <meta prefix="og: http://ogp.me/ns#" property="og:description" content="Transform your meetings with AI-powered summaries and action items. Save 6+ hours every week." />
+        <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://recapify.io/og-image.png" />
         
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@recapify" />
+        <meta name="twitter:title" content="Recapify - Never Lose Track of Meeting Actions Again" />
+        <meta name="twitter:description" content="Transform your meetings with AI-powered summaries and action items. Save 6+ hours every week." />
+        <meta name="twitter:image" content="https://recapify.io/og-image.png" />
+        <meta name="twitter:creator" content="@khalilmerc" />
         <meta name="twitter:domain" content="recapify.io" />
         
         <meta name="apple-mobile-web-app-capable" content="yes" />
