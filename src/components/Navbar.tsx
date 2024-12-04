@@ -24,12 +24,6 @@ export const Navbar = () => {
                         <a href="/#howitworks" className="text-sm font-semibold text-gray-600 hover:text-gray-900">
                             How it works
                         </a>
-                        <a href="/#usecases" className="text-sm font-semibold text-gray-600 hover:text-gray-900">
-                            Use cases
-                        </a>
-                        <a href="/#features" className="text-sm font-semibold text-gray-600 hover:text-gray-900">
-                            Features
-                        </a>
                         <Link href="/blog" className="text-sm font-semibold text-gray-600 hover:text-gray-900">
                             Blog
                         </Link>

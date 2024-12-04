@@ -94,8 +94,6 @@ export default function Home() {
         onSubmit={handleJoinWaitlist}
       />
       <HowItWorks />
-      <UseCases />
-      <Features />
       <Faq />
       <Footer 
         formData={formData}

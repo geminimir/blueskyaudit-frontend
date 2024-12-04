@@ -14,7 +14,7 @@ type HeroSectionProps = {
 
 export default function HeroSection({ formData, onEmailChange, onSubmit }: HeroSectionProps) {
   return (
-    <section id="hero" className="pt-24 sm:pt-32 px-4 sm:px-6 py-16 sm:py-32 lg:px-8 bg-gradient-to-b from-white to-[#F7FBFF]">
+    <section id="hero" className="pt-18 sm:pt-24 px-4 sm:px-6 py-16 sm:py-32 lg:px-8 bg-gradient-to-b from-white to-[#F7FBFF]">
       <div className="mx-auto max-w-2xl text-center">
         {/* Pre-heading Launch Badge */}
         <motion.div
@@ -31,7 +31,21 @@ export default function HeroSection({ formData, onEmailChange, onSubmit }: HeroS
           animate={{ opacity: 1, y: 0 }}
           className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
         >
-          Unlock Bluesky's Influencer Potential
+          Collaborate with Creators on <span className="relative inline-block">
+            Bluesky
+            <motion.span
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+              className="absolute -bottom-2 left-0 w-full h-[3px] bg-gradient-to-r from-[#0185FF]/40 via-[#0185FF] to-[#0185FF]/40"
+            />
+            <motion.span
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ delay: 0.7, duration: 0.8, ease: "easeOut" }}
+              className="absolute -bottom-1 left-0 w-[70%] h-[2px] bg-[#0185FF]/30 blur-[1px]"
+            />
+          </span>
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -39,8 +53,7 @@ export default function HeroSection({ formData, onEmailChange, onSubmit }: HeroS
           transition={{ delay: 0.2 }}
           className="mt-6 text-lg leading-8 text-gray-600"
         >
-          The first influencer marketing platform built exclusively for Bluesky. Connect with authentic creators,
-          manage campaigns effortlessly, and measure real impact in the decentralized social space.
+          The first influencer marketing platform built exclusively for Bluesky.
         </motion.p>
 
         {/* Waitlist Form */}
@@ -88,9 +101,28 @@ export default function HeroSection({ formData, onEmailChange, onSubmit }: HeroS
           transition={{ delay: 0.5 }}
           className="mt-6 flex flex-wrap justify-center items-center gap-6 text-sm"
         >
-          <span className="text-gray-500">
-            Join <span className="font-medium text-[#0185FF]">10+</span> others on the waitlist
-          </span>
+          <div className="flex items-center">
+            <div className="flex -space-x-2">
+              <img
+                className="relative inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
+                src="/avatars/alex.png"
+                alt="Creator"
+              />
+              <img
+                className="relative inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
+                src="/avatars/alexandria.png"
+                alt="Creator"
+              />
+              <img
+                className="relative inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
+                src="/avatars/marc.png"
+                alt="Creator"
+              />
+            </div>
+            <span className="ml-4 text-gray-500">
+              Connect with <span className="font-medium text-[#0185FF]">23+ million</span> creators on Bluesky
+            </span>
+          </div>
         </motion.div>
 
         {/* Early Access Benefits */}

@@ -1,49 +1,75 @@
-'use client'
+import { Plus, Search, TrendingUp, MessageSquare } from 'lucide-react'
 
-import { Upload, Link, Wand2, Download } from 'lucide-react'
+interface QuickActionsProps {
+    onCreateCampaign: () => void
+    onFindCreators: () => void
+}
 
-export function QuickActions() {
-  const actions = [
-    {
-      title: 'Import Meeting',
-      description: 'Upload recording or transcript',
-      icon: Upload,
-      action: () => console.log('Import')
-    },
-    {
-      title: 'Generate Summary',
-      description: 'Process uploaded meeting',
-      icon: Wand2,
-      action: () => console.log('Generate')
-    },
-    {
-      title: 'Export Summaries',
-      description: 'Download all meeting summaries',
-      icon: Download,
-      action: () => console.log('Export')
-    }
-  ]
+export default function QuickActions({ onCreateCampaign, onFindCreators }: QuickActionsProps) {
+    const actions = [
+        {
+            icon: <Plus className="w-5 h-5" />,
+            label: 'Create Campaign',
+            description: 'Start a new campaign',
+            onClick: onCreateCampaign,
+            primary: true
+        },
+        {
+            icon: <Search className="w-5 h-5" />,
+            label: 'Find Creators',
+            description: 'Discover new creators',
+            onClick: onFindCreators
+        },
+        {
+            icon: <MessageSquare className="w-5 h-5" />,
+            label: 'Messages',
+            description: '3 unread messages',
+            onClick: () => {}
+        },
+        {
+            icon: <TrendingUp className="w-5 h-5" />,
+            label: 'Reports',
+            description: 'View campaign reports',
+            onClick: () => {}
+        }
+    ]
 
-  return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 sticky top-24">
-      <h2 className="text-lg font-semibold text-gray-900 mb-6">Quick Actions</h2>
-      <div className="grid gap-4">
-        {actions.map((action) => (
-          <button
-            key={action.title}
-            onClick={action.action}
-            className="flex items-center gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors text-left"
-          >
-            <div className="p-2 bg-indigo-50 rounded-lg">
-              <action.icon className="w-5 h-5 text-indigo-600" />
+    return (
+        <div className="bg-white rounded-xl shadow-sm p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+            <div className="grid grid-cols-1 gap-3">
+                {actions.map((action) => (
+                    <button
+                        key={action.label}
+                        onClick={action.onClick}
+                        className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
+                            action.primary
+                                ? 'bg-[#0185FF] text-white hover:bg-[#0165CC]'
+                                : 'border border-gray-200 hover:border-[#0185FF]/30 hover:bg-[#F7FBFF]'
+                        }`}
+                    >
+                        <div className={`${
+                            action.primary
+                                ? 'text-white'
+                                : 'text-[#0185FF]'
+                        }`}>
+                            {action.icon}
+                        </div>
+                        <div className="text-left">
+                            <div className={`font-medium ${
+                                action.primary ? 'text-white' : 'text-gray-900'
+                            }`}>
+                                {action.label}
+                            </div>
+                            <div className={`text-sm ${
+                                action.primary ? 'text-white/80' : 'text-gray-500'
+                            }`}>
+                                {action.description}
+                            </div>
+                        </div>
+                    </button>
+                ))}
             </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-900">{action.title}</h3>
-              <p className="text-xs text-gray-500">{action.description}</p>
-            </div>
-          </button>
-        ))}
-      </div>
-    </div>
-  )
+        </div>
+    )
 }
