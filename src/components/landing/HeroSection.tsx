@@ -49,7 +49,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
         >
-          What's your <span className="relative inline-block">
+          What's my <span className="relative inline-block">
             Bluesky
             <motion.span
               initial={{ scaleX: 0 }}
