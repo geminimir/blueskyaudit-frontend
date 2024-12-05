@@ -21,8 +21,15 @@ export async function GET(
 
         // Fetch profile data
         const profile = await agent.getProfile({ actor: handle })
-        const follows = profile.data.follows
-        const followers = profile.data.followers
+        console.log('Raw profile data:', {
+            follows: profile.data.followsCount,
+            followers: profile.data.followersCount,
+            postsCount: profile.data.postsCount,
+            description: profile.data.description
+        })
+
+        const follows = profile.data.followsCount
+        const followers = profile.data.followersCount
         const posts = await agent.getAuthorFeed({ actor: handle, limit: 100 })
 
         // Calculate metrics
@@ -45,30 +52,34 @@ export async function GET(
         const authScore = calculateAuthScore(profile.data, followers as number)
         const badgeLevel = calculateBadgeLevel(authScore)
 
+        const formattedData = {
+            profile: {
+                displayName: profile.data.displayName || handle,
+                description: profile.data.description || '',
+                avatar: profile.data.avatar || '/default-avatar.png',
+                banner: profile.data.banner,
+                followsCount: formatNumber(follows as number | undefined),
+                followersCount: formatNumber(followers as number | undefined),
+                postsCount: formatNumber(profile.data.postsCount as number | undefined),
+                engagementRate: `${engagementRate}%`,
+                handle: handle,
+                tags: extractTags(profile.data.description || '')
+            },
+            scores: {
+                profileCompleteness: activityScore,
+                engagementScore: engagementScore,
+                postingActivity: authScore
+            },
+            totalScore: Math.round((activityScore + engagementScore + authScore) / 3),
+            title: getBadgeTitle(badgeLevel),
+            recommendations: generateRecommendations(profile.data, activityScore, engagementScore, authScore)
+        }
+
+        console.log('Formatted response data:', formattedData)
+
         return NextResponse.json({
             success: true,
-            data: {
-                profile: {
-                    displayName: profile.data.displayName || handle,
-                    description: profile.data.description || '',
-                    avatar: profile.data.avatar || '/default-avatar.png',
-                    banner: profile.data.banner,
-                    followsCount: formatNumber(follows as number),
-                    followersCount: formatNumber(followers as number),
-                    postsCount: formatNumber(profile.data.postsCount as number),
-                    engagementRate: `${engagementRate}%`,
-                    handle: handle,
-                    tags: extractTags(profile.data.description || '')
-                },
-                scores: {
-                    profileCompleteness: activityScore,
-                    engagementScore: engagementScore,
-                    postingActivity: authScore
-                },
-                totalScore: Math.round((activityScore + engagementScore + authScore) / 3),
-                title: getBadgeTitle(badgeLevel),
-                recommendations: generateRecommendations(profile.data, activityScore, engagementScore, authScore)
-            }
+            data: formattedData
         })
     } catch (error) {
         console.error('Error fetching profile:', error)
@@ -82,14 +93,16 @@ export async function GET(
     }
 }
 
-function formatNumber(num: number): string {
+function formatNumber(num: number | undefined): string {
+    if (!num) return '0';  // Handle undefined/null case
+    
     if (num >= 1000000) {
-        return (num / 1000000).toFixed(1) + 'M'
+        return (num / 1000000).toFixed(1) + 'M';
     }
     if (num >= 1000) {
-        return (num / 1000).toFixed(1) + 'k'
+        return (num / 1000).toFixed(1) + 'k';
     }
-    return num.toString()
+    return num.toString();
 }
 
 function calculateActivityScore(recentPosts: number, totalPosts: number): number {
@@ -99,7 +112,7 @@ function calculateActivityScore(recentPosts: number, totalPosts: number): number
 }
 
 function calculateEngagementScore(engagementRate: number): number {
-    const score = Math.min((engagementRate / 3) * 100, 100)
+    const score = Math.min((engagementRate / 5) * 100, 100)
     return Math.round(score)
 }
 

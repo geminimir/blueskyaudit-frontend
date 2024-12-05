@@ -159,6 +159,8 @@ export const Profile: React.FC<ProfileProps> = ({ handle }) => {
   const authRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
 
+  const [isScreenshotMode, setIsScreenshotMode] = useState(false);
+
   useEffect(() => {
     const loadProfileData = async () => {
       setIsLoading(true);
@@ -183,7 +185,7 @@ export const Profile: React.FC<ProfileProps> = ({ handle }) => {
         { ref: engagementRef, value: scores.engagementScore },
         { ref: authRef, value: scores.postingActivity }
       ].forEach(({ ref, value }) => {
-        if (ref.current) {
+        if (ref.current && typeof value === 'number') {
           animate(0, value, {
             duration: 1.5,
             onUpdate: (latest) => {
@@ -264,10 +266,25 @@ export const Profile: React.FC<ProfileProps> = ({ handle }) => {
 
   const takeScreenshot = async () => {
     if (!profileRef.current || isCapturing) return;
-
+  
     try {
       setIsCapturing(true);
-
+      setIsScreenshotMode(true);
+  
+      await new Promise((resolve) => setTimeout(resolve, 100));
+  
+      // Create a proxy URL for the avatar image
+      const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(mappedData.avatar)}`;
+  
+      // Pre-load the avatar image through the proxy
+      await new Promise((resolve, reject) => {
+        const img = document.createElement('img') as HTMLImageElement;
+        img.crossOrigin = 'anonymous';
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = proxyUrl;
+      });
+  
       // Create a watermark element
       const watermark = document.createElement('div');
       watermark.textContent = '© BlueSkyAudit';
@@ -283,10 +300,10 @@ export const Profile: React.FC<ProfileProps> = ({ handle }) => {
         border-radius: 4px;
         pointer-events: none;
       `;
-
+  
       // Append the watermark to the profileRef
       profileRef.current.appendChild(watermark);
-
+  
       // Create a container that preserves all styles
       const container = document.createElement('div');
       container.style.cssText = `
@@ -301,27 +318,42 @@ export const Profile: React.FC<ProfileProps> = ({ handle }) => {
         pointer-events: none;
         z-index: -1;
       `;
-
+  
       // Copy the element with all its classes
       container.innerHTML = profileRef.current.outerHTML;
       document.body.appendChild(container);
-
+  
       // Remove the screenshot and view profile buttons from the cloned container
       const clonedButtons = container.querySelectorAll('.screenshot-button, .view-profile-button');
       clonedButtons.forEach(button => button.remove());
-
+  
+      // Update the avatar src in the cloned container
+      const avatarImg = container.querySelector('img');
+      if (avatarImg) {
+        avatarImg.crossOrigin = 'anonymous';
+        avatarImg.src = proxyUrl;
+      }
+  
       const canvas = await html2canvas(container, {
         scale: 2,
         backgroundColor: null,
-        logging: true,
+        logging: false,
         allowTaint: true,
-        useCORS: true
+        useCORS: true,
+        imageTimeout: 0,
+        onclone: (clonedDoc) => {
+          const clonedImg = clonedDoc.querySelector('img');
+          if (clonedImg) {
+            clonedImg.crossOrigin = 'anonymous';
+            clonedImg.src = proxyUrl;
+          }
+        }
       });
-
+  
       // Cleanup
       document.body.removeChild(container);
-      profileRef.current.removeChild(watermark); // Remove the watermark after capturing
-
+      profileRef.current.removeChild(watermark);
+  
       canvas.toBlob((blob) => {
         if (!blob) return;
         const url = URL.createObjectURL(blob);
@@ -331,11 +363,12 @@ export const Profile: React.FC<ProfileProps> = ({ handle }) => {
         link.click();
         URL.revokeObjectURL(url);
       }, 'image/png');
-
+  
     } catch (error) {
       console.error('Screenshot failed:', error);
     } finally {
       setIsCapturing(false);
+      setIsScreenshotMode(false);
     }
   };
 
@@ -410,18 +443,30 @@ export const Profile: React.FC<ProfileProps> = ({ handle }) => {
           <div className="flex items-start gap-6">
             <motion.div className="relative">
               <div className="w-24 h-24 rounded-full bg-gray-100 overflow-hidden border-4 border-white shadow-lg">
-                <motion.img 
-                  src={mappedData.avatar} 
-                  alt={displayName} 
-                  className="w-full h-full object-cover"
-                  initial={{ scale: 1.2 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = '/default-avatar.png';
-                  }}
-                />
+                {isScreenshotMode ? (
+                  <img 
+                    src={mappedData.avatar} 
+                    alt={displayName} 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = '/default-avatar.png';
+                    }}
+                  />
+                ) : (
+                  <motion.img 
+                    src={mappedData.avatar} 
+                    alt={displayName} 
+                    className="w-full h-full object-cover"
+                    initial={{ scale: 1.2 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = '/default-avatar.png';
+                    }}
+                  />
+                )}
               </div>
               <motion.div 
                 className={`absolute -bottom-2 -right-2 ${badgeColors.bg} ${badgeColors.text} ${badgeColors.glow} text-sm font-medium px-3 py-1 rounded-full shadow-md flex items-center gap-1.5`}
@@ -658,7 +703,7 @@ export const Profile: React.FC<ProfileProps> = ({ handle }) => {
         </motion.div>
       </motion.div>
 
-      {/* Updated footer using the saved SVG */}
+      {/* Updated footer using regular img tag */}
       <motion.div
         className="mt-16 text-center"
         initial={{ opacity: 0, y: 20 }}
@@ -674,7 +719,7 @@ export const Profile: React.FC<ProfileProps> = ({ handle }) => {
           whileTap={{ scale: 0.95 }}
         >
           <span>Powered by</span>
-          <Image
+          <img
             src="/logos/bluesky.svg"
             alt="Bluesky"
             width={20}
