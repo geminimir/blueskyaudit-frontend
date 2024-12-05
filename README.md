@@ -1,13 +1,15 @@
-# BlueBrandly
+# BlueSkyAudit
 
-BlueBrandly is a Bluesky influencer marketing platform that helps brands discover and collaborate with authentic creators on the decentralized social network.
+BlueSkyAudit is a comprehensive analytics and auditing tool for Bluesky, helping users and organizations understand engagement patterns, track content performance, and gain insights from the decentralized social network.
 
 ## Features
 
-- Automatic meeting transcription and summarization
-- Key points and action items extraction
-- Easy sharing and collaboration
-- Integration with popular meeting platforms
+- Detailed engagement analytics and metrics
+- Content performance tracking
+- Follower growth and interaction patterns
+- Custom report generation
+- Historical data analysis
+- API usage monitoring
 
 ## Getting Started
 

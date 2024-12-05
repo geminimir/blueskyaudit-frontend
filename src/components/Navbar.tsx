@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import Image from 'next/image'
 
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -15,28 +16,24 @@ export const Navbar = () => {
                     {/* Logo */}
                     <div className="flex items-center">
                         <Link href="/" className="text-xl font-bold text-gray-900">
-                            BlueBrandly
+                            BlueSkyAudit
                         </Link>
                     </div>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex md:items-center md:gap-x-8">
-                        <a href="/#howitworks" className="text-sm font-semibold text-gray-600 hover:text-gray-900">
-                            How it works
-                        </a>
-                        <Link href="/blog" className="text-sm font-semibold text-gray-600 hover:text-gray-900">
-                            Blog
-                        </Link>
-                        <a href="/#faq" className="text-sm font-semibold text-gray-600 hover:text-gray-900">
-                            FAQ
-                        </a>
+                    <div className="hidden md:flex md:items-center">
                         <Link
-                            href="/">
-                            <span
-                                className="flex items-center rounded-lg bg-[#0185FF] px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 text-center"
-                            >
-                                Join Waitlist
-                            </span>
+                            href="https://bsky.app"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 hover:opacity-80 transition-opacity"
+                        >
+                            <Image 
+                                src="/logos/bluesky.svg" 
+                                alt="Open in Bluesky" 
+                                width={32} 
+                                height={32}
+                            />
                         </Link>
                     </div>
 
@@ -59,26 +56,19 @@ export const Navbar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="md:hidden border-t border-gray-100 bg-white"
                 >
-                    <div className="space-y-1 px-6 py-4">
-                        <a href="/#features" className="block py-2 text-base font-medium text-gray-600 hover:text-gray-900">
-                            Features
-                        </a>
-                        <a href="/#examples" className="block py-2 text-base font-medium text-gray-600 hover:text-gray-900">
-                            Examples
-                        </a>
-                        <Link href="/blog" className="block py-2 text-base font-medium text-gray-600 hover:text-gray-900">
-                            Blog
-                        </Link>
-                        <a href="/#faq" className="block py-2 text-base font-medium text-gray-600 hover:text-gray-900">
-                            FAQ
-                        </a>
+                    <div className="space-y-1 px-6 py-4 flex justify-center">
                         <Link
-                            href="/">
-                            <span
-                                className="flex items-center justify-center rounded-lg bg-[#6366F1] px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 text-center"
-                            >
-                                Join Waitlist
-                            </span>
+                            href="https://bsky.app"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 hover:opacity-80 transition-opacity"
+                        >
+                            <Image 
+                                src="/logos/bluesky.svg" 
+                                alt="Open in Bluesky" 
+                                width={32} 
+                                height={32}
+                            />
                         </Link>
                     </div>
                 </motion.div>

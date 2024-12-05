@@ -7,46 +7,46 @@ import { Navbar } from '@/components/Navbar'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'BlueBrandly - Premium Brand Development & Marketing',
-  description: 'Expert brand development and marketing solutions for businesses looking to stand out. Transform your brand identity and market presence.',
-  metadataBase: new URL('https://bluebrandly.com'),
+  title: 'BlueSkyAudit - Share Your Bluesky Profile',
+  description: 'Create and share beautiful screenshots of your Bluesky social profile. A fun and easy way to showcase your Bluesky presence.',
+  metadataBase: new URL('https://blueskyaudit.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'BlueBrandly - Premium Brand Development & Marketing',
-    description: 'Expert brand development and marketing solutions for businesses looking to stand out. Transform your brand identity and market presence.',
-    url: 'https://bluebrandly.com',
+    title: 'BlueSkyAudit - Share Your Bluesky Profile',
+    description: 'Create and share beautiful screenshots of your Bluesky social profile. A fun and easy way to showcase your Bluesky presence.',
+    url: 'https://blueskyaudit.com',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'BlueBrandly - Brand Development & Marketing',
+        alt: 'BlueSkyAudit - Profile Screenshot Tool',
       }
     ],
     type: 'website',
     locale: 'en_US',
-    siteName: 'BlueBrandly',
+    siteName: 'BlueSkyAudit',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'BlueBrandly - Premium Brand Development & Marketing',
-    description: 'Expert brand development and marketing solutions for businesses looking to stand out. Transform your brand identity and market presence.',
+    title: 'BlueSkyAudit - Share Your Bluesky Profile',
+    description: 'Create and share beautiful screenshots of your Bluesky social profile. A fun and easy way to showcase your Bluesky presence.',
     images: ['/og-image.png'],
-    creator: '@bluebrandly',
-    site: '@bluebrandly',
-    domain: 'bluebrandly.com',
+    creator: '@blueskyaudit',
+    site: '@blueskyaudit',
+    domain: 'blueskyaudit.com',
   },
   keywords: [
-    'brand development',
-    'marketing solutions',
-    'brand identity',
-    'digital marketing',
-    'brand strategy',
-    'business branding',
-    'marketing services',
-    'brand consulting'
+    'bluesky profile',
+    'profile screenshot',
+    'social media',
+    'bluesky social',
+    'profile sharing',
+    'screenshot tool',
+    'social profile',
+    'bluesky tools'
   ],
   authors: [{ name: 'BlueBrandly', url: 'https://bluebrandly.com' }],
   viewport: {
